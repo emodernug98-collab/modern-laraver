@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(xargs ls:*)",
+      "Bash(ls /e/Modern/backend/.env*)",
+      "Bash(mysql -h 127.0.0.1 -u modern -p'123456Pp' -e \"SHOW DATABASES LIKE 'emodern%';\")"
+    ],
+    "additionalDirectories": [
+      "e:\\Modern\\backend\\storage\\framework\\views"
+    ]
+  }
+}
