@@ -17,12 +17,13 @@ import {
 import { isLoggedIn } from "@/lib/auth";
 
 export default function CartPage() {
-  const [items, setItems] = useState<CartItem[]>(() => readCart());
+  const [items, setItems] = useState<CartItem[]>([]);
   const router = useRouter();
 
   const refresh = () => setItems(readCart());
 
   useEffect(() => {
+    refresh();
     window.addEventListener("cart:updated", refresh);
     window.addEventListener("storage", refresh);
     return () => {

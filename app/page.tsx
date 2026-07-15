@@ -9,7 +9,7 @@ import LatestProductsSection from "@/components/LatestProductsSection";
 import Footer from "@/components/Footer";
 import type { GifAd } from "@/lib/frontend-data";
 import { getLatestPublishedProducts } from "@/lib/products-admin";
-import { getSparePartsCategoryFeature, getApplianceCategoryFeature, getArduinoCategoryFeature, getBatteriesCategoryFeature } from "@/lib/products-public";
+import { getHomeCategoryGroups, pickHomeCategoryFeature } from "@/lib/products-public";
 import SafeImage from "@/components/SafeImage";
 import Link from "next/link";
 import {
@@ -46,22 +46,17 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function Home() {
   const frontendData =
     (await readFrontendData().catch(() => null)) ?? mergeFrontendData({});
-  const [latestProductsResult, sparePartsCategoryResult, applianceCategoryResult, arduinoCategoryResult, batteriesCategoryResult] = await Promise.allSettled([
+  const [latestProductsResult, homeCategoryGroupsResult] = await Promise.allSettled([
     getLatestPublishedProducts(10),
-    getSparePartsCategoryFeature(),
-    getApplianceCategoryFeature(),
-    getArduinoCategoryFeature(),
-    getBatteriesCategoryFeature(),
+    getHomeCategoryGroups(),
   ]);
   const latestProducts = latestProductsResult.status === "fulfilled" ? latestProductsResult.value : [];
-  const sparePartsCategory =
-    sparePartsCategoryResult.status === "fulfilled" ? sparePartsCategoryResult.value : null;
-  const applianceCategory =
-    applianceCategoryResult.status === "fulfilled" ? applianceCategoryResult.value : null;
-  const arduinoCategory =
-    arduinoCategoryResult.status === "fulfilled" ? arduinoCategoryResult.value : null;
-  const batteriesCategory =
-    batteriesCategoryResult.status === "fulfilled" ? batteriesCategoryResult.value : null;
+  const homeCategoryGroups =
+    homeCategoryGroupsResult.status === "fulfilled" ? homeCategoryGroupsResult.value : [];
+  const sparePartsCategory = pickHomeCategoryFeature(homeCategoryGroups, "spare-parts", "Spare parts and Components");
+  const applianceCategory = pickHomeCategoryFeature(homeCategoryGroups, "home-appliances", "Home Appliances");
+  const arduinoCategory = pickHomeCategoryFeature(homeCategoryGroups, "arduino-kits", "Arduino Kits");
+  const batteriesCategory = pickHomeCategoryFeature(homeCategoryGroups, "accessories", "Accessories");
   const latestSection = frontendData.latestProducts;
   const products = latestProducts.length > 0 ? latestProducts : latestSection.products;
 

@@ -255,28 +255,20 @@ export const defaultFrontendData: FrontendData = {
     showMarquee: true,
     marqueeText:
       "HOT SALE 🔥 | MODERN ELECTRONICS LTD Trusted Electronics Experts Since 1998! Get quality electronics, appliances, accessories, and reliable tech solutions from Modern Electronics Ltd. Affordable Prices • Genuine Products • Trusted Service • Visit us today and upgrade your lifestyle with modern technology.",
-    topLinks: [
-      { label: "Home", href: "/", icon: "home" },
-      { label: "About Us", href: "/about", icon: "info" },
-      { label: "Contact", href: "/contact", icon: "mail" },
-    ],
-    quickLinks: [
-      { label: "TV Parts", href: "/category/spare-parts" },
-      { label: "Home Appliances", href: "/category/home-appliances" },
-      { label: "Accessories", href: "/category/accessories" },
-      { label: "Contact Us", href: "/contact" },
-    ],
+    // Empty by default — real nav links are admin-managed in Laravel and
+    // served via /frontend-data (FrontendDataController::$defaultData).
+    // This only renders when Laravel is entirely unreachable.
+    topLinks: [],
+    quickLinks: [],
   },
   hero: {
     slides: [],
     sideCards: [],
   },
+  // Single generic fallback — real trust-bar copy is admin-managed in
+  // Laravel and served via /frontend-data. Only renders when unreachable.
   trustBar: {
-    items: [
-      { icon: "wallet", title: "Secure Shopping", subtitle: "100% Safe & Secure" },
-      { icon: "package", title: "Easy Support", subtitle: "Whatsapp & Call" },
-      { icon: "truck", title: "Fast Delivery", subtitle: "Fast delivery around Kampala" },
-    ],
+    items: [{ icon: "package", title: "Secure Shopping", subtitle: "" }],
   },
   categoryTiles: {
     cards: [
@@ -339,50 +331,10 @@ export const defaultFrontendData: FrontendData = {
   categories: [],
   // Empty by default — populated from the dashboard via /api/frontend-data.
   gateways: [],
-  pickupLocations: [
-    {
-      id: "pickup-bombo-road",
-      title: "Bombo Road",
-      contactName: "Bombo Road Desk",
-      phone: "+256700000001",
-      email: "bombo@modern-electronics.com",
-      addressLine1: "Bombo Road",
-      addressLine2: "",
-      country: "Uganda",
-      state: "Central Region",
-      city: "Kampala",
-      postalCode: "256",
-      isActive: true,
-    },
-    {
-      id: "pickup-kampala-road",
-      title: "Kampala Road",
-      contactName: "Kampala Road Desk",
-      phone: "+256700000002",
-      email: "kampalaroad@modern-electronics.com",
-      addressLine1: "Kampala Road",
-      addressLine2: "",
-      country: "Uganda",
-      state: "Central Region",
-      city: "Kampala",
-      postalCode: "256",
-      isActive: true,
-    },
-    {
-      id: "pickup-lugogo-bypass",
-      title: "Lugogo By pass",
-      contactName: "Lugogo By pass Desk",
-      phone: "+256700000003",
-      email: "lugogo@modern-electronics.com",
-      addressLine1: "Lugogo By pass",
-      addressLine2: "",
-      country: "Uganda",
-      state: "Central Region",
-      city: "Kampala",
-      postalCode: "256",
-      isActive: true,
-    },
-  ],
+  // Empty by default — real pickup locations (address/phone/email) are
+  // admin-managed in Laravel and served via /frontend-data. Only renders
+  // when Laravel is entirely unreachable.
+  pickupLocations: [],
   offers: [],
   gifAds: [],
 };
