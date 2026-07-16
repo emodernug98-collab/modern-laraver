@@ -6,6 +6,7 @@ import { ChevronLeft, ChevronRight, Star } from "lucide-react";
 import SafeImage from "@/components/SafeImage";
 import type { RelatedProductsData } from "@/lib/frontend-data";
 import { useFrontendData } from "@/lib/use-frontend-data";
+import { getDisplayRating, getDisplayReviewCount } from "@/lib/rating";
 
 type RelatedProductsCarouselProps = {
   products?: RelatedProductsData["products"];
@@ -145,8 +146,12 @@ export default function RelatedProductsCarousel({
                       </Link>
 
                       <Rating
-                        rating={product.rating}
-                        reviews={product.reviews}
+                        rating={getDisplayRating(product.id, product.rating)}
+                        reviews={
+                          product.reviews && product.reviews.trim() !== ""
+                            ? product.reviews
+                            : getDisplayReviewCount(product.id).toLocaleString()
+                        }
                       />
 
                       {product.tag ? (

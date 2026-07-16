@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import Link from "next/link";
 import { ArrowDownUp, SlidersHorizontal, Star, X } from "lucide-react";
 import SafeImage from "@/components/SafeImage";
+import { getDisplayRating } from "@/lib/rating";
 import type { CategoryListingProduct, CategorySubCategory } from "@/lib/products-public";
 
 type SortMode = "relevance" | "price-low" | "price-high" | "rating-high";
@@ -60,7 +61,7 @@ function ProductCard({ product }: { product: CategoryListingProduct }) {
         <div className="mt-2 flex items-center gap-1.5 text-[#f59e0b] sm:mt-3 sm:gap-2">
           <Star size={15} className="h-3.5 w-3.5 fill-current sm:h-[15px] sm:w-[15px]" />
           <span className="text-[11px] font-medium text-gray-700 sm:text-[13px]">
-            {(product.rating ?? 4).toFixed(1)}
+            {getDisplayRating(product.id, product.rating).toFixed(1)}
           </span>
         </div>
         <div className="mt-2 flex flex-wrap items-baseline gap-1.5 sm:mt-3 sm:gap-2">
@@ -131,14 +132,15 @@ export default function CategoryProductsClient({
       if (discountedOnly && !product.discountPercent) return false;
       if ((product.discountPercent || 0) < minDiscount) return false;
       if ((product.price || 0) > maxPrice) return false;
-      if ((product.rating ?? 0) < minRating) return false;
+      if (getDisplayRating(product.id, product.rating) < minRating) return false;
       return true;
     });
 
     return [...next].sort((a, b) => {
       if (sortMode === "price-low") return (a.price || 0) - (b.price || 0);
       if (sortMode === "price-high") return (b.price || 0) - (a.price || 0);
-      if (sortMode === "rating-high") return (b.rating ?? 0) - (a.rating ?? 0);
+      if (sortMode === "rating-high")
+        return getDisplayRating(b.id, b.rating) - getDisplayRating(a.id, a.rating);
       return 0;
     });
   }, [

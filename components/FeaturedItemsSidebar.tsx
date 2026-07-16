@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Star } from "lucide-react";
 import { addToCart } from "@/lib/cart";
 import SafeImage from "@/components/SafeImage";
+import { getDisplayRating, getDisplayReviewCount } from "@/lib/rating";
 import type { FeaturedSidebarProduct } from "@/lib/products-public";
 
 export default function FeaturedItemsSidebar() {
@@ -53,6 +54,12 @@ export default function FeaturedItemsSidebar() {
 }
 
 function FeaturedProductCard({ product }: { product: FeaturedSidebarProduct }) {
+  const rating = getDisplayRating(product.id, product.rating);
+  const reviewsLabel =
+    product.reviews && product.reviews.trim() !== ""
+      ? product.reviews
+      : getDisplayReviewCount(product.id).toLocaleString();
+
   return (
     <div className="flex min-w-[280px] max-w-[320px] flex-1 items-start gap-4 rounded-lg border border-gray-100 p-3">
       <div className="flex h-[88px] w-[88px] shrink-0 items-center justify-center">
@@ -76,7 +83,7 @@ function FeaturedProductCard({ product }: { product: FeaturedSidebarProduct }) {
 
         <div className="mt-1 flex items-center gap-1">
           <div className="flex items-center">
-            {Array.from({ length: product.rating }).map((_, index) => (
+            {Array.from({ length: Math.round(rating) }).map((_, index) => (
               <Star
                 key={index}
                 className="h-[16px] w-[16px] fill-[#ff7a00] text-[#ff7a00]"
@@ -84,7 +91,7 @@ function FeaturedProductCard({ product }: { product: FeaturedSidebarProduct }) {
               />
             ))}
           </div>
-          <span className="text-[14px] text-[#2162a1]">{product.reviews}</span>
+          <span className="text-[14px] text-[#2162a1]">{reviewsLabel}</span>
         </div>
 
         <div className="mt-1 flex items-start gap-[1px] text-[#0f1111]">

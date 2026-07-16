@@ -189,6 +189,47 @@ export async function searchPublicProducts(
   }
 }
 
+export type SearchCategoryRef = { name: string; slug: string };
+
+export type SearchResults = {
+  products: CategoryListingProduct[];
+  similarProducts: RelatedProduct[];
+  similarCategory: SearchCategoryRef | null;
+};
+
+/**
+ * Same endpoint as searchPublicProducts, but also surfaces "similar
+ * products" from the best-matching category — used by the dedicated
+ * /search results page so a query never dead-ends on a handful of exact
+ * hits.
+ */
+export async function searchPublicProductsFull(
+  query: string,
+  limit = 30
+): Promise<SearchResults> {
+  const term = query.trim();
+  if (!term) return { products: [], similarProducts: [], similarCategory: null };
+
+  try {
+    const params = new URLSearchParams({
+      q: term,
+      limit: String(limit),
+    });
+    const data = await apiFetch<{
+      products?: CategoryListingProduct[];
+      similarProducts?: RelatedProduct[];
+      similarCategory?: SearchCategoryRef | null;
+    }>(`/products/search?${params.toString()}`);
+    return {
+      products: data.products ?? [],
+      similarProducts: data.similarProducts ?? [],
+      similarCategory: data.similarCategory ?? null,
+    };
+  } catch {
+    return { products: [], similarProducts: [], similarCategory: null };
+  }
+}
+
 export type CategorySubCategory = {
   id: string;
   name: string;

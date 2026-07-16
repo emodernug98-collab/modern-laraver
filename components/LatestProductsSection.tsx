@@ -14,6 +14,7 @@ import { Star } from "lucide-react";
 import SafeImage from "@/components/SafeImage";
 import { addToCart } from "@/lib/cart";
 import { normalizeMediaUrl } from "@/lib/media";
+import { getDisplayRating, getDisplayReviewCount } from "@/lib/rating";
 import type { LatestProduct } from "@/lib/frontend-data";
 import WishlistButton from "@/components/WishlistButton";
 
@@ -255,8 +256,10 @@ function ProductCard({ product: p, priority }: { product: ProductFeedItem; prior
         </p>
 
         <div className="mt-1 flex items-center gap-1 sm:mt-1.5">
-          <Rating value={p.rating} />
-          <span className="text-[11px] text-[#2162a1] sm:text-[13px]">0</span>
+          <Rating value={getDisplayRating(p.id, p.rating)} />
+          <span className="text-[11px] text-[#2162a1] sm:text-[13px]">
+            {getDisplayReviewCount(p.id).toLocaleString()}
+          </span>
         </div>
 
         <div className="mt-1 flex items-start gap-[2px] text-[#0f1111]">

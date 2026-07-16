@@ -185,7 +185,7 @@ export default function NavBar({
     }
 
     setIsSearchOpen(false);
-    router.push(`/category/all?search=${encodeURIComponent(term)}`);
+    router.push(`/search?q=${encodeURIComponent(term)}`);
   };
 
   const searchTerms = useMemo(() => {

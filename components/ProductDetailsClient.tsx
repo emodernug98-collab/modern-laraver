@@ -19,6 +19,7 @@ import {
 import SafeImage from "@/components/SafeImage";
 import { addToCart } from "@/lib/cart";
 import { normalizeMediaUrl } from "@/lib/media";
+import { getDisplayRating } from "@/lib/rating";
 import type { PublicProductPageData } from "@/lib/products-public";
 import WishlistButton from "@/components/WishlistButton";
 import { isLoggedIn } from "@/lib/auth";
@@ -396,14 +397,14 @@ export default function ProductDetailsClient({
 
             <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-2 text-[14px]">
               <div className="flex items-center gap-1 text-[#f59e0b]">
-                <span>{product.rating.toFixed(1)}</span>
+                <span>{getDisplayRating(product.id, product.rating).toFixed(1)}</span>
                 <div className="flex">
                   {Array.from({ length: 5 }).map((_, i) => (
                     <Star
                       key={i}
                       size={15}
                       className={
-                        i < Math.round(product.rating)
+                        i < Math.round(getDisplayRating(product.id, product.rating))
                           ? "fill-[#f59e0b] text-[#f59e0b]"
                           : "text-gray-300"
                       }
@@ -492,8 +493,8 @@ export default function ProductDetailsClient({
 
             {product.specs.length > 0 ? (
               <div className="mt-6 grid max-w-[640px] grid-cols-[140px_minmax(0,1fr)] gap-y-2 text-[14px]">
-                {product.specs.map((spec) => (
-                  <div key={`${spec.label}-${spec.value}`} className="contents">
+                {product.specs.map((spec, index) => (
+                  <div key={`${spec.label}-${spec.value}-${index}`} className="contents">
                     <div className="font-semibold text-gray-900">{spec.label}</div>
                     <div className="text-gray-700">{spec.value}</div>
                   </div>
