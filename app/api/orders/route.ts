@@ -26,5 +26,12 @@ export async function POST(request: NextRequest) {
     );
   }
 
+  if (response.status >= 500) {
+    return Response.json(
+      { ok: false, error: "Orders service is temporarily unavailable. Please try again later." },
+      { status: 503 }
+    );
+  }
+
   return response;
 }
