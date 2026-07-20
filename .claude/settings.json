@@ -3,10 +3,23 @@
     "allow": [
       "Bash(xargs ls:*)",
       "Bash(ls /e/Modern/backend/.env*)",
-      "Bash(mysql -h 127.0.0.1 -u modern -p'123456Pp' -e \"SHOW DATABASES LIKE 'emodern%';\")"
+      "Bash(mysql -h 127.0.0.1 -u modern -p'123456Pp' -e \"SHOW DATABASES LIKE 'emodern%';\")",
+      "Bash(npx tsc *)",
+      "Bash([ -f \"$PHP_BIN\" ])",
+      "Bash('/c/Users/KenPro Media/.config/herd/bin/php84/php.exe' -l 'C:\\\\Users\\\\KenPro Media\\\\Desktop\\\\modern\\\\app\\\\app\\\\Http\\\\Controllers\\\\ProductController.php')",
+      "Bash('/c/Users/KenPro Media/.config/herd/bin/php84/php.exe' -l 'C:\\\\Users\\\\KenPro Media\\\\Desktop\\\\modern\\\\app\\\\routes\\\\api.php')",
+      "Bash('/c/Users/KenPro Media/.config/herd/bin/php84.bat' -l 'C:\\\\Users\\\\KenPro Media\\\\Desktop\\\\modern\\\\app\\\\app\\\\Http\\\\Controllers\\\\ProductController.php')",
+      "Bash('/c/Users/KenPro Media/.config/herd/bin/php84.bat' -l 'C:\\\\Users\\\\KenPro Media\\\\Desktop\\\\modern\\\\app\\\\routes\\\\api.php')",
+      "PowerShell(& \"C:\\\\Users\\\\KenPro Media\\\\.config\\\\herd\\\\bin\\\\php84.bat\" -l \"C:\\\\Users\\\\KenPro Media\\\\Desktop\\\\modern\\\\app\\\\app\\\\Http\\\\Controllers\\\\ProductController.php\")",
+      "PowerShell(& \"C:\\\\Users\\\\KenPro Media\\\\.config\\\\herd\\\\bin\\\\php84.bat\" -l \"C:\\\\Users\\\\KenPro Media\\\\Desktop\\\\modern\\\\app\\\\routes\\\\api.php\")",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)"
     ],
     "additionalDirectories": [
-      "e:\\Modern\\backend\\storage\\framework\\views"
+      "e:\\Modern\\backend\\storage\\framework\\views",
+      "C:\\Users\\KenPro Media\\Desktop\\modern\\app\\app\\Http\\Controllers",
+      "C:\\Users\\KenPro Media\\Desktop\\modern\\app\\routes"
     ]
   }
 }
