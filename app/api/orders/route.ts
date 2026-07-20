@@ -5,7 +5,12 @@ import { proxyToLaravel } from "@/lib/proxy";
 export const dynamic = "force-dynamic";
 
 export async function GET(request: NextRequest) {
-  const response = await proxyToLaravel("GET", "/orders", request);
+  let response: Response;
+  try {
+    response = await proxyToLaravel("GET", "/orders", request);
+  } catch {
+    return Response.json({ ok: true, orders: [] }, { status: 200 });
+  }
 
   // Reading order history should not break the account page while the
   // Laravel orders endpoint is being deployed/migrated on cPanel.
@@ -17,7 +22,15 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
-  const response = await proxyToLaravel("POST", "/orders", request);
+  let response: Response;
+  try {
+    response = await proxyToLaravel("POST", "/orders", request);
+  } catch {
+    return Response.json(
+      { ok: false, error: "Orders service is temporarily unavailable. Please try again later." },
+      { status: 503 }
+    );
+  }
 
   if (response.status === 404) {
     return Response.json(
